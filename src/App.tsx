@@ -7,7 +7,7 @@ import SearchBar from './SearchBar'
 
 function App() {
   const [breedNames, setBreedNames] = useState([])
-  const [searchText, setSearchText] = useState([])
+  const [searchText, setSearchText] = useState("")
 
   useEffect(() => {
     fetch("https://frontend-take-home-service.fetch.com/dogs/breeds", {
@@ -22,8 +22,8 @@ function App() {
       .then((dogBreedResponse) => setBreedNames(dogBreedResponse))
   }, [])
 
-  const filteredBreedNames = breedNames.filter(breeds=>{
-      return breeds.toUpperCase().includes(searchText.toUpperCase())
+  const filteredBreedNames = breedNames.filter(breedName=>{
+      return breedName.toUpperCase().includes(searchText.toUpperCase())
   })
 
   // let breedList = breedNames.map((breed)=>{
