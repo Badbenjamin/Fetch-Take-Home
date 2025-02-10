@@ -1,10 +1,12 @@
 import { useState } from "react"
+import { useNavigate } from "react-router"
 
 export default function LoginPage() {
     const [formData, setFormData] = useState({
         name: "",
         email: ""
     })
+    let navigate = useNavigate()
 
     console.log(formData)
 
@@ -21,6 +23,7 @@ export default function LoginPage() {
         // console.log(submission)
         console.log(formData)
         getData(formData)
+        navigate('/home')
     }
 
     const authUrl = "https://frontend-take-home-service.fetch.com/auth/login"
@@ -35,7 +38,7 @@ export default function LoginPage() {
             body: JSON.stringify(formData)
         })
             .then((response) => console.log(response))
-        // .then((cookie) => console.log(cookie))
+            .then((cookie) => console.log(cookie))
     }
 
 
