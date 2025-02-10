@@ -1,9 +1,8 @@
 import { useEffect, useState} from "react"
 
-export function DogComponent({breed}){
+export function DogComponent({breed, setMatchList, matchList}){
     const [dogPic, setDogPic] = useState("")
-    const breedName = breed.toLowerCase()
-    // console.log(breedName)
+    const [isSelected, setIsSelected] = useState(false)
     useEffect(()=>{
         fetch(`https://dog.ceo/api/breeds/image/random`)
         .then((response) => response.json())
@@ -19,8 +18,13 @@ export function DogComponent({breed}){
     // console.log(dogPic)
     // console.log(breed)
 
+
+
     function onClick(){
-        console.log(breed)
+        let newMatchList = [...matchList]
+        newMatchList.push(breed)
+        setMatchList(newMatchList)
+        setIsSelected(true)
     }
 
     if (dogPic == ""){
@@ -32,6 +36,7 @@ export function DogComponent({breed}){
             <div onClick={onClick} className="dog-pic">
                 <p>{breed}</p>
                 <img width={100} height={100} src={dogPic}/>
+                <p>{isSelected ? "selected!" : ""}</p>
             </div>
         )
     }

@@ -8,7 +8,8 @@ import SearchBar from './SearchBar'
 function App() {
   const [breedNames, setBreedNames] = useState([])
   const [searchText, setSearchText] = useState("")
-
+  const [matchList, setMatchList] = useState([])
+  console.log(matchList)
   useEffect(() => {
     fetch("https://frontend-take-home-service.fetch.com/dogs/breeds", {
       headers: {
@@ -36,7 +37,7 @@ function App() {
       <div>
         <p>HOME PAGE</p>
         <SearchBar setSearchText={setSearchText}/>
-        <BreedList breedNames={filteredBreedNames} />
+        <BreedList breedNames={filteredBreedNames} matchList={matchList} setMatchList={setMatchList}/>
       </div>
     </>
   )
