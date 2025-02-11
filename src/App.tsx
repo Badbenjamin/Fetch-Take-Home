@@ -15,9 +15,13 @@ function App() {
   const [adoptionArray, setAdoptionAray] = useState([])
   const [reactSelectOptions, setReactSelectOptions] = useState([])
   const [adoptableDogs, setAdoptableDogs] = useState([])
+  const [total, setTotal] = useState(0)
+  const [next, setNext] = useState("")
+  const [prev, setPrev] = useState("")
+  console.log('tnp', total, next, prev)
   // console.log('o', reactSelectOptions)
-  console.log('adar',adoptionArray)
-  console.log('btm', breedMatchList)
+  // console.log('adar',adoptionArray)
+  // console.log('btm', breedMatchList)
 
   // get breed names to build reactSelect options
   useEffect(() => {
@@ -66,6 +70,9 @@ function App() {
   })
     .then((response) => response.json())
     .then((responseData)=>{
+      setTotal(responseData.total)
+      setNext(responseData.next)
+      setPrev(responseData.prev)
       const newAdoptionArray = responseData.resultIds.map((id)=>{
         return id
       })
@@ -91,8 +98,36 @@ function App() {
 
   // let adoptionList = []
   let adoptionList = adoptableDogs.map((dog)=>{
-    return <AdoptableDog key={dog.name, dog.age} dog={dog}/>
+    return <AdoptableDog key={dog.name + dog.age} dog={dog}/>
   })
+
+  function navPage(direction){
+    console.log(direction)
+    if (direction == "next"){
+
+    }
+
+
+    fetch(`https://frontend-take-home-service.fetch.com${next}`, {
+      headers: {
+        "Content-Type": "application/json",
+        // "Accept": 'application/json',
+      },
+      credentials: 'include',
+      method: "GET",
+    })
+    .then((response) => response.json())
+    .then((responseData)=>{
+      setTotal(responseData.total)
+      setNext(responseData.next)
+      setPrev(responseData.prev)
+      const newAdoptionArray = responseData.resultIds.map((id)=>{
+        return id
+      })
+      setAdoptionAray(newAdoptionArray)
+    })
+   
+  }
 
   return (
     <>
@@ -103,7 +138,7 @@ function App() {
          isMulti
          /><button onClick={onFindMatches}>FIND MATCHES</button>
          <>{adoptionList}</>
-        {/* <BreedList breedNames={filteredBreedNames} breedMatchList={breedMatchList} setMatchList={setMatchList}/> */}
+        {/* <button onClick={navPage("prev")}>prev</button><button onClick={navPage("next")}>next</button> */}
       </div>
     </>
   )
