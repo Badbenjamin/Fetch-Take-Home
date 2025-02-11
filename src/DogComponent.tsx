@@ -1,8 +1,9 @@
 import { useEffect, useState} from "react"
 
-export function DogComponent({breed, setMatchList, matchList}){
+export function DogComponent({breed, setMatchList, breedMatchList}){
     const [dogPic, setDogPic] = useState("")
     const [isSelected, setIsSelected] = useState(false)
+    
     useEffect(()=>{
         fetch(`https://dog.ceo/api/breeds/image/random`)
         .then((response) => response.json())
@@ -21,9 +22,9 @@ export function DogComponent({breed, setMatchList, matchList}){
 
 
     function onClick(){
-        let newMatchList = [...matchList]
-        newMatchList.push(breed)
-        setMatchList(newMatchList)
+        let newBreedMatchList = [...breedMatchList]
+        newBreedMatchList.push(breed)
+        setMatchList(newBreedMatchList)
         setIsSelected(true)
     }
 
