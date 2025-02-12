@@ -29,3 +29,10 @@
 @media (min-width: 600px){
   .adoption-list-cards{ grid-template-columns: repeat(2, 1fr);}
 } */
+
+.my-selected-dogs{
+  border-style: solid;
+  border-radius: 5px;
+  display: flex;
+  overflow-y: hidden;
+}

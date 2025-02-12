@@ -1,8 +1,8 @@
 
-export function AdoptableDog({dog}){
-    // console.log('addo dog', dog)
+export function AdoptableDog({dog, handleDogSelection}){
+    console.log(handleDogSelection)
     function handleClick(){
-        console.log(dog)
+        handleDogSelection(dog)
     }
 
     return(

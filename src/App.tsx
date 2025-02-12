@@ -5,6 +5,7 @@ import './App.css'
 import Select from 'react-select'
 // import { AdoptableDog } from './AdoptableDog'
 import AdoptableDogList from './AdoptableDogList'
+import MySelectedDogs from './MySelectedDogs'
 
 function App() {
   const [breedNames, setBreedNames] = useState([])
@@ -12,6 +13,7 @@ function App() {
   const [adoptionArray, setAdoptionAray] = useState([])
   const [reactSelectOptions, setReactSelectOptions] = useState([])
   const [adoptableDogs, setAdoptableDogs] = useState([])
+  const [selectedDogs, setSelectedDogs] = useState([])
   const [total, setTotal] = useState(0)
   const [next, setNext] = useState("")
   const [prev, setPrev] = useState("")
@@ -151,20 +153,16 @@ function App() {
     fetch(authUrl, {
         headers: {
             "Content-Type": "application/json",
-            // "Accept": 'application/json',
         },
         credentials: 'include',
         method: "POST",
         body: "logout"
     })
-    .then((response) => console.log(response))
-    // .then((cookie) => console.log(cookie))
     navigate("/")
   }
 
   function clearMatches(){
     setReactSelectOptions([])
-    
     setAdoptableDogs([])
     setNext("")
     setPrev("")
@@ -174,6 +172,21 @@ function App() {
     setSortDirection(document.getElementById('sort').value)
   }
 
+  function handleDogSelection(dog){
+    let newSelectedDogs = [...selectedDogs, dog]
+    setSelectedDogs(newSelectedDogs)
+  }
+
+  function handleDogRemove(dogId){
+    console.log(dogId)
+    console.log(selectedDogs)
+    let newSelectedDogs = [...selectedDogs]
+    let filteredSelectedDogs = newSelectedDogs.filter((dogObj)=>{
+      return dogObj.id != dogId
+    })
+    setSelectedDogs(filteredSelectedDogs)
+  }
+  console.log(selectedDogs)
   return (
     <>
       <div>
@@ -188,12 +201,13 @@ function App() {
               <option value='desc'>Z-A</option>
             </select>
          <button onClick={onFindMatches}>FIND MATCHES</button>
-         <button onClick={clearMatches}>ClEAR MATCHES</button>
+         <button onClick={clearMatches}>CLEAR MATCHES</button>
+         <MySelectedDogs handleDogRemove={handleDogRemove} selectedDogs={selectedDogs}/>
          <p>RESULTS: {total}</p>
-         {adoptableDogs ? <AdoptableDogList adoptableDogs={adoptableDogs} /> : <>pick your breed</>}
+         {adoptableDogs ? <AdoptableDogList handleDogSelection={handleDogSelection} adoptableDogs={adoptableDogs} /> : <>pick your breed</>}
          {/* <>{adoptionList}</> */}
-        {!prev ? <>start</> : <button onClick={()=>navPage('prev')}>prev</button>}
-        {!next ? <>end</> :<button onClick={()=>navPage('next')}>next</button>}
+        {!prev ? <></> : <button onClick={()=>navPage('prev')}>prev</button>}
+        {!next ? <></> :<button onClick={()=>navPage('next')}>next</button>}
       </div>
     </>
   )
