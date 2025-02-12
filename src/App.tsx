@@ -1,16 +1,11 @@
 import { useState, useEffect } from 'react'
 
 import './App.css'
-import { DogComponent } from './DogComponent'
-import { BreedList } from './BreedList'
-import SearchBar from './SearchBar'
-import ReactSelectSearch from './ReactSelectSearch'
 import Select from 'react-select'
 import { AdoptableDog } from './AdoptableDog'
 
 function App() {
   const [breedNames, setBreedNames] = useState([])
-  const [searchText, setSearchText] = useState("")
   const [breedMatchList, setMatchList] = useState([])
   const [adoptionArray, setAdoptionAray] = useState([])
   const [reactSelectOptions, setReactSelectOptions] = useState([])
@@ -19,9 +14,7 @@ function App() {
   const [next, setNext] = useState("")
   const [prev, setPrev] = useState("")
   console.log('tnp', total, next, prev)
-  // console.log('o', reactSelectOptions)
-  // console.log('adar',adoptionArray)
-  // console.log('btm', breedMatchList)
+
 
   // get breed names to build reactSelect options
   useEffect(() => {
@@ -103,12 +96,16 @@ function App() {
 
   function navPage(direction){
     console.log(direction)
-    if (direction == "next"){
-
+    let pageDirection = null
+    if (direction == "next" && next){
+      pageDirection = next;
+    } else if (direction == "prev" && prev){
+      pageDirection = prev;
+    } else {
+      console.error("end");
     }
 
-
-    fetch(`https://frontend-take-home-service.fetch.com${next}`, {
+    fetch(`https://frontend-take-home-service.fetch.com${pageDirection}`, {
       headers: {
         "Content-Type": "application/json",
         // "Accept": 'application/json',
@@ -138,7 +135,8 @@ function App() {
          isMulti
          /><button onClick={onFindMatches}>FIND MATCHES</button>
          <>{adoptionList}</>
-        {/* <button onClick={navPage("prev")}>prev</button><button onClick={navPage("next")}>next</button> */}
+        {!prev ? <>start</> : <button onClick={()=>navPage('prev')}>prev</button>}
+        {!next ? <>end</> :<button onClick={()=>navPage('next')}>next</button>}
       </div>
     </>
   )
