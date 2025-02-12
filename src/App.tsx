@@ -15,7 +15,11 @@ function App() {
   const [total, setTotal] = useState(0)
   const [next, setNext] = useState("")
   const [prev, setPrev] = useState("")
+  const [sortDirection, setSortDirection]= useState("asc")
   const navigate = useNavigate()
+
+  // let sortDirection = document.getElementById('sort').value
+  // console.log('sd', sortDirection)
   console.log('tnp', total, next, prev)
   console.log('bml', breedMatchList)
 
@@ -66,7 +70,8 @@ function App() {
     }
     
     // console.log('uribml',uriBreedMatchList)
-    let url = `https://frontend-take-home-service.fetch.com/dogs/search?breeds=${breedQuery}`
+    let sort = `&sort=breed:${sortDirection}`
+    let url = `https://frontend-take-home-service.fetch.com/dogs/search?breeds=${breedQuery}${sort}`
     console.log('url', url)
     fetch(url, {
        headers: {
@@ -165,6 +170,10 @@ function App() {
     setPrev("")
   }
 
+  function selectChange(){
+    setSortDirection(document.getElementById('sort').value)
+  }
+
   return (
     <>
       <div>
@@ -172,9 +181,15 @@ function App() {
         <Select options={reactSelectOptions}
          onChange={opt=>handleBreedSelect(opt)}
          isMulti
-         /><button onClick={onFindMatches}>FIND MATCHES</button>
+         />
+         <label for='sort'>Sort by</label>
+            <select name="a-z" id='sort' onChange={selectChange}>
+              <option value='asc'>A-Z</option>
+              <option value='desc'>Z-A</option>
+            </select>
+         <button onClick={onFindMatches}>FIND MATCHES</button>
          <button onClick={clearMatches}>ClEAR MATCHES</button>
-         <p>{total}</p>
+         <p>RESULTS: {total}</p>
          {adoptableDogs ? <AdoptableDogList adoptableDogs={adoptableDogs} /> : <>pick your breed</>}
          {/* <>{adoptionList}</> */}
         {!prev ? <>start</> : <button onClick={()=>navPage('prev')}>prev</button>}
