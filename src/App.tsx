@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router'
 
 import './App.css'
 import Select from 'react-select'
-import { AdoptableDog } from './AdoptableDog'
+// import { AdoptableDog } from './AdoptableDog'
+import AdoptableDogList from './AdoptableDogList'
 
 function App() {
   const [breedNames, setBreedNames] = useState([])
@@ -13,6 +15,7 @@ function App() {
   const [total, setTotal] = useState(0)
   const [next, setNext] = useState("")
   const [prev, setPrev] = useState("")
+  const navigate = useNavigate()
   console.log('tnp', total, next, prev)
 
 
@@ -90,9 +93,7 @@ function App() {
   }, [adoptionArray])
 
   // let adoptionList = []
-  let adoptionList = adoptableDogs.map((dog)=>{
-    return <AdoptableDog key={dog.name + dog.age} dog={dog}/>
-  })
+  
 
   function navPage(direction){
     console.log(direction)
@@ -126,15 +127,35 @@ function App() {
    
   }
 
+  function logOut(){
+    const authUrl = "https://frontend-take-home-service.fetch.com/auth/logout"
+    
+    fetch(authUrl, {
+        headers: {
+            "Content-Type": "application/json",
+            // "Accept": 'application/json',
+        },
+        credentials: 'include',
+        method: "POST",
+        body: "logout"
+    })
+    .then((response) => console.log(response))
+    // .then((cookie) => console.log(cookie))
+    navigate("/")
+
+    
+  }
+
   return (
     <>
       <div>
-        <p>HOME PAGE</p>
+        <p>HOME PAGE</p><button onClick={logOut}>logout</button>
         <Select options={reactSelectOptions}
          onChange={opt=>handleBreedSelect(opt)}
          isMulti
          /><button onClick={onFindMatches}>FIND MATCHES</button>
-         <>{adoptionList}</>
+         {adoptableDogs ? <AdoptableDogList adoptableDogs={adoptableDogs} /> : <>pick your breed</>}
+         {/* <>{adoptionList}</> */}
         {!prev ? <>start</> : <button onClick={()=>navPage('prev')}>prev</button>}
         {!next ? <>end</> :<button onClick={()=>navPage('next')}>next</button>}
       </div>
