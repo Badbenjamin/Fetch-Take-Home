@@ -204,7 +204,7 @@ function App() {
          <button onClick={clearMatches}>CLEAR MATCHES</button>
          <MySelectedDogs handleDogRemove={handleDogRemove} selectedDogs={selectedDogs}/>
          <p>RESULTS: {total}</p>
-         {adoptableDogs ? <AdoptableDogList handleDogSelection={handleDogSelection} adoptableDogs={adoptableDogs} /> : <>pick your breed</>}
+         {adoptableDogs ? <AdoptableDogList selectedDogs={selectedDogs} handleDogSelection={handleDogSelection} adoptableDogs={adoptableDogs} /> : <>pick your breed</>}
          {/* <>{adoptionList}</> */}
         {!prev ? <></> : <button onClick={()=>navPage('prev')}>prev</button>}
         {!next ? <></> :<button onClick={()=>navPage('next')}>next</button>}
