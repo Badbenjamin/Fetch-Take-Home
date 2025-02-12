@@ -17,7 +17,7 @@ function App() {
   const [prev, setPrev] = useState("")
   const navigate = useNavigate()
   console.log('tnp', total, next, prev)
-
+  console.log('bml', breedMatchList)
 
   // get breed names to build reactSelect options
   useEffect(() => {
@@ -56,7 +56,19 @@ function App() {
   // returns ids of dogs, theses ids are sent to fetch.com/dogs to return dog objs
   function onFindMatches(e){
     console.log('breed match list find matches', breedMatchList)
-    fetch(`https://frontend-take-home-service.fetch.com/dogs/search?breeds=${breedMatchList}`, {
+    let breedQuery = ""
+    if (breedMatchList.length == 1){
+      breedQuery = breedMatchList
+    } else if (breedMatchList.length > 1){
+      for (const breed of breedMatchList){
+        breedQuery += `&breeds=${breed}`
+      }
+    }
+    
+    // console.log('uribml',uriBreedMatchList)
+    let url = `https://frontend-take-home-service.fetch.com/dogs/search?breeds=${breedQuery}`
+    console.log('url', url)
+    fetch(url, {
        headers: {
         "Content-Type": "application/json",
         // "Accept": 'application/json',
@@ -66,6 +78,7 @@ function App() {
   })
     .then((response) => response.json())
     .then((responseData)=>{
+      console.log('resp dat',responseData)
       setTotal(responseData.total)
       setNext(responseData.next)
       setPrev(responseData.prev)
@@ -142,8 +155,14 @@ function App() {
     .then((response) => console.log(response))
     // .then((cookie) => console.log(cookie))
     navigate("/")
+  }
 
+  function clearMatches(){
+    setReactSelectOptions([])
     
+    setAdoptableDogs([])
+    setNext("")
+    setPrev("")
   }
 
   return (
@@ -154,6 +173,8 @@ function App() {
          onChange={opt=>handleBreedSelect(opt)}
          isMulti
          /><button onClick={onFindMatches}>FIND MATCHES</button>
+         <button onClick={clearMatches}>ClEAR MATCHES</button>
+         <p>{total}</p>
          {adoptableDogs ? <AdoptableDogList adoptableDogs={adoptableDogs} /> : <>pick your breed</>}
          {/* <>{adoptionList}</> */}
         {!prev ? <>start</> : <button onClick={()=>navPage('prev')}>prev</button>}
