@@ -2,16 +2,19 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
 import './App.css'
-import Select from 'react-select'
+
 // import { AdoptableDog } from './AdoptableDog'
 import AdoptableDogList from './AdoptableDogList'
 import MySelectedDogs from './MySelectedDogs'
 import Match from './Match'
+import { SearchForDogs } from './SearchForDogs'
 
 function App() {
   const [breedNames, setBreedNames] = useState([])
   const [breedMatchList, setMatchList] = useState([])
+  console.log('bml', breedMatchList)
   const [adoptionArray, setAdoptionAray] = useState([])
+
   const [reactSelectOptions, setReactSelectOptions] = useState([])
   const [adoptableDogs, setAdoptableDogs] = useState([])
   const [selectedDogs, setSelectedDogs] = useState([])
@@ -21,13 +24,14 @@ function App() {
   const [sortDirection, setSortDirection]= useState("asc")
   const [match, setMatch] = useState('')
   const navigate = useNavigate()
-
+  console.log('addd',adoptableDogs)
   // let sortDirection = document.getElementById('sort').value
   // console.log('sd', sortDirection)
-  console.log('tnp', total, next, prev)
-  console.log('bml', breedMatchList)
+  // console.log('tnp', total, next, prev)
+  // console.log('bml', breedMatchList)
 
   // get breed names to build reactSelect options
+  // COULD BE IN REACT SELECT SEARCH ELEMENT? 
   useEffect(() => {
     fetch("https://frontend-take-home-service.fetch.com/dogs/breeds", {
       headers: {
@@ -51,7 +55,7 @@ function App() {
 
   },[breedNames])
 
-  // build an array of selected breeds that can be passed to fectch req
+  // build an array of selected breeds that can be passed to search fectch req
   function handleBreedSelect(breedNameArray){
     let breedsToMatch = breedNameArray.map((breedName)=>{
       return breedName.value
@@ -60,10 +64,11 @@ function App() {
     setMatchList(breedsToMatch)
   }
 
-  // accepts array of matching breeds
+  // accepts array of breed names from react-select search
   // returns ids of dogs, theses ids are sent to fetch.com/dogs to return dog objs
+  // MOVE THIS TO ADOPTABLEDOGLIST
   function onFindMatches(e){
-    console.log('breed match list find matches', breedMatchList)
+    // console.log('breed match list find matches', breedMatchList)
     let breedQuery = ""
     if (breedMatchList.length == 1){
       breedQuery = breedMatchList
@@ -99,56 +104,56 @@ function App() {
     })
   }
 
-  // takes ids and returns dog objects
-  useEffect(()=>{
-    fetch('https://frontend-take-home-service.fetch.com/dogs', {
-      headers: {
-        "Content-Type": "application/json",
-        // "Accept": 'application/json',
-      },
-      credentials: 'include',
-      method: "POST",
-      body : JSON.stringify(adoptionArray)
-    })
-    .then((response)=>response.json())
-    .then((dogData)=>setAdoptableDogs(dogData))
-  }, [adoptionArray])
+  // // takes ids and returns dog objects
+  // useEffect(()=>{
+  //   fetch('https://frontend-take-home-service.fetch.com/dogs', {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       // "Accept": 'application/json',
+  //     },
+  //     credentials: 'include',
+  //     method: "POST",
+  //     body : JSON.stringify(adoptionArray)
+  //   })
+  //   .then((response)=>response.json())
+  //   .then((dogData)=>setAdoptableDogs(dogData))
+  // }, [adoptionArray])
 
   // let adoptionList = []
   
 
-  function navPage(direction){
-    console.log(direction)
-    let pageDirection = null
-    if (direction == "next" && next){
-      pageDirection = next;
-    } else if (direction == "prev" && prev){
-      pageDirection = prev;
-    } else {
-      console.error("end");
-    }
+  // function navPage(direction){
+  //   console.log(direction)
+  //   let pageDirection = null
+  //   if (direction == "next" && next){
+  //     pageDirection = next;
+  //   } else if (direction == "prev" && prev){
+  //     pageDirection = prev;
+  //   } else {
+  //     console.error("end");
+  //   }
 
-    // get next or prev from response to fetch next 25 results
-    fetch(`https://frontend-take-home-service.fetch.com${pageDirection}`, {
-      headers: {
-        "Content-Type": "application/json",
-        // "Accept": 'application/json',
-      },
-      credentials: 'include',
-      method: "GET",
-    })
-    .then((response) => response.json())
-    .then((responseData)=>{
-      setTotal(responseData.total)
-      setNext(responseData.next)
-      setPrev(responseData.prev)
-      const newAdoptionArray = responseData.resultIds.map((id)=>{
-        return id
-      })
-      setAdoptionAray(newAdoptionArray)
-    })
+  //   // get next or prev from response to fetch next 25 results
+  //   fetch(`https://frontend-take-home-service.fetch.com${pageDirection}`, {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       // "Accept": 'application/json',
+  //     },
+  //     credentials: 'include',
+  //     method: "GET",
+  //   })
+  //   .then((response) => response.json())
+  //   .then((responseData)=>{
+  //     setTotal(responseData.total)
+  //     setNext(responseData.next)
+  //     setPrev(responseData.prev)
+  //     const newAdoptionArray = responseData.resultIds.map((id)=>{
+  //       return id
+  //     })
+  //     setAdoptionAray(newAdoptionArray)
+  //   })
    
-  }
+  // }
 
   function logOut(){
     const authUrl = "https://frontend-take-home-service.fetch.com/auth/logout"
@@ -209,31 +214,40 @@ function App() {
   }
   console.log(selectedDogs)
   return (
-    <>
-      <div>
-        <p>HOME PAGE</p><button onClick={logOut}>logout</button>
-        <Select options={reactSelectOptions}
-         onChange={opt=>handleBreedSelect(opt)}
-         isMulti
-         />
-         <label for='sort'>Sort by</label>
-            <select name="a-z" id='sort' onChange={selectChange}>
-              <option value='asc'>A-Z</option>
-              <option value='desc'>Z-A</option>
-            </select>
-         <button onClick={onFindMatches}>FIND MATCHES</button>
-         <button onClick={clearMatches}>CLEAR MATCHES</button>
-         <MySelectedDogs handleDogRemove={handleDogRemove} selectedDogs={selectedDogs}/>
-         <button onClick={getMatch}>get match</button>
-         <br></br>
-         {match ? <Match match={match}/> : <></>}
-         <p>RESULTS: {total}</p>
-         {adoptableDogs ? <AdoptableDogList selectedDogs={selectedDogs} handleDogSelection={handleDogSelection} adoptableDogs={adoptableDogs} /> : <>pick your breed</>}
-         {/* <>{adoptionList}</> */}
-        {!prev ? <></> : <button onClick={()=>navPage('prev')}>prev</button>}
-        {!next ? <></> :<button onClick={()=>navPage('next')}>next</button>}
-      </div>
-    </>
+    <div>
+        <SearchForDogs 
+          reactSelectOptions={reactSelectOptions} 
+          handleBreedSelect={handleBreedSelect} 
+          selectChange={selectChange}
+          onFindMatches={onFindMatches}
+          clearMatches={clearMatches}
+        />
+        <MySelectedDogs handleDogRemove={handleDogRemove} selectedDogs={selectedDogs}/>
+        <button onClick={getMatch}>get match</button>
+        <br></br>
+        {match ? <Match match={match}/> : <></>}
+        {adoptableDogs ? <AdoptableDogList 
+                            selectedDogs={selectedDogs} 
+                            handleDogSelection={handleDogSelection} 
+                            adoptionArray={adoptionArray}
+                            setAdoptionArray={setAdoptionAray}
+                            total={total}
+                            setTotal={setTotal}
+                            next={next}
+                            setNext={setNext}
+                            prev={prev}
+                            setPrev={setPrev}
+                            // adoptableDogs={adoptableDogs}
+                            // setAdoptableDogs={setAdoptableDogs}
+                          /> 
+                            
+
+                        : <>pick your breed</>}
+        {/* <>{adoptionList}</> */}
+      {/* {!prev ? <></> : <button onClick={()=>navPage('prev')}>prev</button>} */}
+      {/* {!next ? <></> :<button onClick={()=>navPage('next')}>next</button>} */}
+    </div>
+    
   )
 }
 

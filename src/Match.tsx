@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import './App.css'
 
 export default function Match({match}){
     const [ourMatch, setOurMatch] = useState([])
@@ -19,7 +20,7 @@ export default function Match({match}){
     console.log('om',ourMatch)
     if (ourMatch[0]){
         return(
-            <div>
+            <div className="match">
                 <img src={ourMatch[0].img} alt={ourMatch[0].name}/>
                 <p>BREED: {ourMatch[0].breed}</p>
                 <p>NAME: {ourMatch[0].name}</p>

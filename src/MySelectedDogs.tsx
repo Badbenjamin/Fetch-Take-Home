@@ -8,7 +8,7 @@ export default function MySelectedDogs({selectedDogs, handleDogRemove}){
 
     let selectedDogCards = selectedDogs.map((dog)=>{
         return(
-            <div>
+            <div >
                 <AdoptableDog dog={dog}/>
                 <button onClick={onRemove} value={dog.id}>remove</button>
             </div>
@@ -16,6 +16,7 @@ export default function MySelectedDogs({selectedDogs, handleDogRemove}){
     })
     return(
         <div className="my-selected-dogs">
+            <>favorite dogs</>
             {selectedDogCards}
         </div>
     )

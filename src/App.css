@@ -5,7 +5,11 @@
   text-align: center;
 }
 
-.adoption-list-cards{
+.dog-match-container{
+  border-style: solid;
+  border-radius: 20px;
+}
+.adoptable-dog-list{
   display: grid;
   max-width: 1200px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -35,4 +39,9 @@
   border-radius: 5px;
   display: flex;
   overflow-y: hidden;
+}
+
+.match{
+  border-style: solid;
+  border-radius: 5px;
 }
