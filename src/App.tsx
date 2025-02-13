@@ -6,6 +6,7 @@ import Select from 'react-select'
 // import { AdoptableDog } from './AdoptableDog'
 import AdoptableDogList from './AdoptableDogList'
 import MySelectedDogs from './MySelectedDogs'
+import Match from './Match'
 
 function App() {
   const [breedNames, setBreedNames] = useState([])
@@ -18,6 +19,7 @@ function App() {
   const [next, setNext] = useState("")
   const [prev, setPrev] = useState("")
   const [sortDirection, setSortDirection]= useState("asc")
+  const [match, setMatch] = useState('')
   const navigate = useNavigate()
 
   // let sortDirection = document.getElementById('sort').value
@@ -126,6 +128,7 @@ function App() {
       console.error("end");
     }
 
+    // get next or prev from response to fetch next 25 results
     fetch(`https://frontend-take-home-service.fetch.com${pageDirection}`, {
       headers: {
         "Content-Type": "application/json",
@@ -159,6 +162,24 @@ function App() {
         body: "logout"
     })
     navigate("/")
+  }
+
+  function getMatch(){
+    console.log('sd',selectedDogs)
+    
+      fetch('https://frontend-take-home-service.fetch.com/dogs/match', {
+        headers: {
+          "Content-Type": "application/json",
+          // "Accept": 'application/json',
+        },
+        credentials: 'include',
+        method: "POST",
+        body : JSON.stringify(selectedDogs.map(dog => dog.id))
+      })
+      .then((response)=>response.json())
+      .then((matchData)=>setMatch(matchData.match))
+    
+    
   }
 
   function clearMatches(){
@@ -203,6 +224,9 @@ function App() {
          <button onClick={onFindMatches}>FIND MATCHES</button>
          <button onClick={clearMatches}>CLEAR MATCHES</button>
          <MySelectedDogs handleDogRemove={handleDogRemove} selectedDogs={selectedDogs}/>
+         <button onClick={getMatch}>get match</button>
+         <br></br>
+         {match ? <Match match={match}/> : <></>}
          <p>RESULTS: {total}</p>
          {adoptableDogs ? <AdoptableDogList selectedDogs={selectedDogs} handleDogSelection={handleDogSelection} adoptableDogs={adoptableDogs} /> : <>pick your breed</>}
          {/* <>{adoptionList}</> */}

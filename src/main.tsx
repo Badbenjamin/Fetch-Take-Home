@@ -7,6 +7,7 @@ import './index.css'
 import App from './App.tsx'
 import LoginPage from './LoginPage.tsx'
 import ErrorElement from './ErrorElement.tsx'
+import Match from './Match.tsx'
 
 
 const router = createBrowserRouter([
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <App />,
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/match",
+    element: <Match />,
     errorElement: <ErrorElement />,
   },
 ])
