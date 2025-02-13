@@ -30,31 +30,54 @@
 }
 
 .search-for-dogs{
+  display: grid;
   border-style: solid;
   border-radius: 25px;
   padding: 10px;
 }
 
-
-
-/* @media (min-width: 900px){
-  .adoption-list-cards{ grid-template-columns: repeat(3, 1fr);}
+@media (max-width: 1200px){
+  .adoptable-dog-list{ grid-template-columns: repeat(5, 1fr);}
 }
 
-@media (min-width: 600px){
-  .adoption-list-cards{ grid-template-columns: repeat(2, 1fr);}
-} */
+@media (max-width: 900px){
+  .adoptable-dog-list{ grid-template-columns: repeat(3, 1fr);}
+}
+
+@media (max-width: 600px){
+  .adoptable-dog-list{ grid-template-columns: repeat(2, 1fr);}
+}
+
+.selected-dogs-container{
+  border-style: solid;
+  border-radius: 20px;
+  background-color: cornflowerblue;
+}
 
 .my-selected-dogs{
-  background-color: cornflowerblue;
-  border-style: solid;
-  border-radius: 5px;
+  padding: 5px;
+  
+  
   display: flex;
   overflow-y: hidden;
 }
 
 .match{
+  display: flex;
+  padding: 5px;
   background-color: cornflowerblue;
   border-style: solid;
-  border-radius: 5px;
+  border-radius: 20px;
+}
+
+.match-pic{
+  padding: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.match-info{
+  padding: 10px;
+  align-items:center;
+  /* align-items: flex-end; */
 }

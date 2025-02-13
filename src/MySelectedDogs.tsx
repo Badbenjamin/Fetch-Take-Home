@@ -1,6 +1,6 @@
 import { AdoptableDog } from "./AdoptableDog"
 
-export default function MySelectedDogs({selectedDogs, handleDogRemove}){
+export default function MySelectedDogs({selectedDogs, handleDogRemove, getMatch}){
 
     function onRemove(e){
         handleDogRemove(e.target.value)
@@ -15,9 +15,12 @@ export default function MySelectedDogs({selectedDogs, handleDogRemove}){
         ) 
     })
     return(
-        <div className="my-selected-dogs">
-            <>favorite dogs</>
-            {selectedDogCards}
+        <div className="selected-dogs-container">
+            <div className="my-selected-dogs">
+                {selectedDogCards}
+            </div>
+            <button onClick={getMatch} >GET MATCH</button>
         </div>
+        
     )
 }

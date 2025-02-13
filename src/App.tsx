@@ -12,9 +12,7 @@ import { SearchForDogs } from './SearchForDogs'
 function App() {
   const [breedNames, setBreedNames] = useState([])
   const [breedMatchList, setMatchList] = useState([])
-  console.log('bml', breedMatchList)
   const [adoptionArray, setAdoptionAray] = useState([])
-
   const [reactSelectOptions, setReactSelectOptions] = useState([])
   const [adoptableDogs, setAdoptableDogs] = useState([])
   const [selectedDogs, setSelectedDogs] = useState([])
@@ -173,10 +171,10 @@ function App() {
           onFindMatches={onFindMatches}
           clearMatches={clearMatches}
         />
-        <MySelectedDogs handleDogRemove={handleDogRemove} selectedDogs={selectedDogs}/>
-        <button onClick={getMatch}>get match</button>
+        <MySelectedDogs handleDogRemove={handleDogRemove} selectedDogs={selectedDogs} getMatch={getMatch}/>
+        
         <br></br>
-        {match ? <Match match={match}/> : <></>}
+        {match ? <Match match={match} /> : <></>}
         {adoptableDogs ? <AdoptableDogList 
                             selectedDogs={selectedDogs} 
                             handleDogSelection={handleDogSelection} 

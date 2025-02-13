@@ -21,11 +21,15 @@ export default function Match({match}){
     if (ourMatch[0]){
         return(
             <div className="match">
-                <img src={ourMatch[0].img} alt={ourMatch[0].name}/>
-                <p>BREED: {ourMatch[0].breed}</p>
-                <p>NAME: {ourMatch[0].name}</p>
-                <p>AGE: {ourMatch[0].age}</p>
-                <p>ZIP: {ourMatch[0].zip_code}</p>
+                <div className="match-pic">
+                    <img src={ourMatch[0].img} alt={ourMatch[0].name}/>
+                </div>
+                <div className="match-info">
+                    <p>BREED: {ourMatch[0].breed}</p>
+                    <p>NAME: {ourMatch[0].name}</p>
+                    <p>AGE: {ourMatch[0].age}</p>
+                    <p>ZIP: {ourMatch[0].zip_code}</p>
+                </div>
             </div>
         )
     } else {

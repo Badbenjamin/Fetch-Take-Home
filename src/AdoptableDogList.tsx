@@ -29,43 +29,21 @@ export default function AdoptableDogList({ handleDogSelection, selectedDogs, ado
     }, [adoptionArray])
 
     function navToPageNum(pageNum){
-        let newPage = pageNum
-        let pageDirection = ""
-        let pageDif = Math.abs(currentPage-pageNum)
-        console.log(pageDif)
-        if (next && pageNum > currentPage){
-            pageDirection = next
-        } else if (prev && pageNum < currentPage){
-            pageDirection = prev
-        } else {
-            return
-        }
+        console.log('disabled')
+        // let pageDif = Math.abs(currentPage-pageNum)
+        // let direction = null
+        // if (next && pageNum > currentPage){
+        //     direction = 'next'
+        // } else if (prev && pageNum < currentPage){
+        //     direction = 'prev'
+        // } else {
+        //     return
+        // }
         
-        let i = 0
-        while (i <= pageDif){
-            fetch(`https://frontend-take-home-service.fetch.com${pageDirection}`, {
-                headers: {
-                  "Content-Type": "application/json",
-                  // "Accept": 'application/json',
-                },
-                credentials: 'include',
-                method: "GET",
-              })
-              .then((response) => response.json())
-              .then((responseData)=>{
-                setTotal(responseData.total)
-                setNext(responseData.next)
-                setPrev(responseData.prev)
-                setCurrentPage(newPage)
-                const newAdoptionArray = responseData.resultIds.map((id)=>{
-                  return id
-                })
-                setAdoptionArray(newAdoptionArray)
-                
-              })
-              i += 1
-        }
         
+        // for (let i = 0; i <= pageDif; i ++){
+        //   navDirection(direction)
+        // }
     }
 
     const pageNumberElements = numberOfPagesArray.map((pageNum)=>{
