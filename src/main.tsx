@@ -21,11 +21,11 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorElement />,
   },
-  {
-    path: "/match",
-    element: <Match />,
-    errorElement: <ErrorElement />,
-  },
+  // {
+  //   path: "/match",
+  //   element: <Match />,
+  //   errorElement: <ErrorElement />,
+  // },
 ])
 
 const root = createRoot(document.getElementById('root'));

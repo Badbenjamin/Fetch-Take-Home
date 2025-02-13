@@ -1,41 +1,87 @@
 import { useState, useEffect } from "react"
 
 import { AdoptableDog } from "./AdoptableDog"
+import PageNumberElement from "./PageNumberElement"
 import './App.css'
 
 export default function AdoptableDogList({ handleDogSelection, selectedDogs, adoptionArray, setAdoptionArray, prev, setPrev, next, setNext, total, setTotal}){
     const [adoptableDogs, setAdoptableDogs] = useState([])
-    // const [total, setTotal] = useState(0)
-    // const [next, setNext] = useState("")
-    // const [prev, setPrev] = useState("")
-    // console.log('adadl', ad)
-    console.log('adoptarray',adoptionArray)
-    console.log('adoptable dogs', adoptableDogs)
-
-    // takes ids and returns dog objects
-  useEffect(()=>{
-    fetch('https://frontend-take-home-service.fetch.com/dogs', {
-      headers: {
-        "Content-Type": "application/json",
-        // "Accept": 'application/json',
-      },
-      credentials: 'include',
-      method: "POST",
-      body : JSON.stringify(adoptionArray)
-    })
-    .then((response)=>response.json())
-    .then((dogData)=>setAdoptableDogs(dogData))
-  }, [adoptionArray])
-
+    const [currentPage, setCurrentPage] = useState(1)
+    console.log('cp', currentPage)
+    const numberOfPagesArray = [...Array(Math.floor(total/25)).keys()];
+   
     
+    // adoptionArray is a list of dog ids
+    // these ids are posted to the /dogs endpoint, and dog objects are returned
+    // adoptableDogs is the array of these objects, and is used to populate our gallery with dog cards
+    useEffect(()=>{
+        fetch('https://frontend-take-home-service.fetch.com/dogs', {
+                headers: {
+                    "Content-Type": "application/json",
+                    // "Accept": 'application/json',
+                },
+                credentials: 'include',
+                method: "POST",
+                body : JSON.stringify(adoptionArray)
+            })
+            .then((response)=>response.json())
+            .then((dogData)=>setAdoptableDogs(dogData))
+    }, [adoptionArray])
 
-    function navPage(direction){
+    function navToPageNum(pageNum){
+        let newPage = pageNum
+        let pageDirection = ""
+        let pageDif = Math.abs(currentPage-pageNum)
+        console.log(pageDif)
+        if (next && pageNum > currentPage){
+            pageDirection = next
+        } else if (prev && pageNum < currentPage){
+            pageDirection = prev
+        } else {
+            return
+        }
+        
+        let i = 0
+        while (i <= pageDif){
+            fetch(`https://frontend-take-home-service.fetch.com${pageDirection}`, {
+                headers: {
+                  "Content-Type": "application/json",
+                  // "Accept": 'application/json',
+                },
+                credentials: 'include',
+                method: "GET",
+              })
+              .then((response) => response.json())
+              .then((responseData)=>{
+                setTotal(responseData.total)
+                setNext(responseData.next)
+                setPrev(responseData.prev)
+                setCurrentPage(newPage)
+                const newAdoptionArray = responseData.resultIds.map((id)=>{
+                  return id
+                })
+                setAdoptionArray(newAdoptionArray)
+                
+              })
+              i += 1
+        }
+        
+    }
+
+    const pageNumberElements = numberOfPagesArray.map((pageNum)=>{
+        return <PageNumberElement key={pageNum} pageNum={pageNum + 1} currentPage={currentPage} navToPageNum={navToPageNum}/>
+    })
+
+    function navDirection(direction){
         console.log(direction)
         let pageDirection = null
+        let newPage = currentPage
         if (direction == "next" && next){
           pageDirection = next;
+          newPage += 1
         } else if (direction == "prev" && prev){
           pageDirection = prev;
+          newPage -= 1
         } else {
           console.error("end");
         }
@@ -54,6 +100,7 @@ export default function AdoptableDogList({ handleDogSelection, selectedDogs, ado
           setTotal(responseData.total)
           setNext(responseData.next)
           setPrev(responseData.prev)
+          setCurrentPage(newPage)
           const newAdoptionArray = responseData.resultIds.map((id)=>{
             return id
           })
@@ -71,13 +118,14 @@ export default function AdoptableDogList({ handleDogSelection, selectedDogs, ado
             />
       })
     return (
-        <div className="dog-match-container">
-            {/* <p>RESULTS: {total}</p> */}
+        <div className="dog-search-result-container">
+            <p>RESULTS: {total}</p>
             <div className="adoptable-dog-list">
                 {adoptionList}
             </div>
-            {!prev ? <></> : <button onClick={()=>navPage('prev')}>prev</button>}
-            {!next ? <></> :<button onClick={()=>navPage('next')}>next</button>}
+            {!prev ? <></> : <a onClick={()=>navDirection('prev')}>prev</a>}
+            <>{pageNumberElements}</>
+            {!next ? <></> :<a onClick={()=>navDirection('next')}>next</a>}
         </div>
         
     )

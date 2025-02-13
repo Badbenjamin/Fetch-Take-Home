@@ -66,7 +66,8 @@ function App() {
 
   // accepts array of breed names from react-select search
   // returns ids of dogs, theses ids are sent to fetch.com/dogs to return dog objs
-  // MOVE THIS TO ADOPTABLEDOGLIST
+  // WORK ON THIS NEXT
+  // BUILD SEPARATE SEARCH COMPONENT
   function onFindMatches(e){
     // console.log('breed match list find matches', breedMatchList)
     let breedQuery = ""
@@ -103,57 +104,6 @@ function App() {
       setAdoptionAray(newAdoptionArray)
     })
   }
-
-  // // takes ids and returns dog objects
-  // useEffect(()=>{
-  //   fetch('https://frontend-take-home-service.fetch.com/dogs', {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       // "Accept": 'application/json',
-  //     },
-  //     credentials: 'include',
-  //     method: "POST",
-  //     body : JSON.stringify(adoptionArray)
-  //   })
-  //   .then((response)=>response.json())
-  //   .then((dogData)=>setAdoptableDogs(dogData))
-  // }, [adoptionArray])
-
-  // let adoptionList = []
-  
-
-  // function navPage(direction){
-  //   console.log(direction)
-  //   let pageDirection = null
-  //   if (direction == "next" && next){
-  //     pageDirection = next;
-  //   } else if (direction == "prev" && prev){
-  //     pageDirection = prev;
-  //   } else {
-  //     console.error("end");
-  //   }
-
-  //   // get next or prev from response to fetch next 25 results
-  //   fetch(`https://frontend-take-home-service.fetch.com${pageDirection}`, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       // "Accept": 'application/json',
-  //     },
-  //     credentials: 'include',
-  //     method: "GET",
-  //   })
-  //   .then((response) => response.json())
-  //   .then((responseData)=>{
-  //     setTotal(responseData.total)
-  //     setNext(responseData.next)
-  //     setPrev(responseData.prev)
-  //     const newAdoptionArray = responseData.resultIds.map((id)=>{
-  //       return id
-  //     })
-  //     setAdoptionAray(newAdoptionArray)
-  //   })
-   
-  // }
 
   function logOut(){
     const authUrl = "https://frontend-take-home-service.fetch.com/auth/logout"
@@ -215,6 +165,7 @@ function App() {
   console.log(selectedDogs)
   return (
     <div>
+        <button onClick={logOut}>log out</button>
         <SearchForDogs 
           reactSelectOptions={reactSelectOptions} 
           handleBreedSelect={handleBreedSelect} 
@@ -237,17 +188,10 @@ function App() {
                             setNext={setNext}
                             prev={prev}
                             setPrev={setPrev}
-                            // adoptableDogs={adoptableDogs}
-                            // setAdoptableDogs={setAdoptableDogs}
                           /> 
-                            
-
-                        : <>pick your breed</>}
-        {/* <>{adoptionList}</> */}
-      {/* {!prev ? <></> : <button onClick={()=>navPage('prev')}>prev</button>} */}
-      {/* {!next ? <></> :<button onClick={()=>navPage('next')}>next</button>} */}
-    </div>
-    
+                        : <>pick your breed</>
+          }
+    </div> 
   )
 }
 

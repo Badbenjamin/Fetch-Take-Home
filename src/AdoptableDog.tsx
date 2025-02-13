@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 
 export function AdoptableDog({dog, handleDogSelection, selectedDogs}){
-    const [color, setColor] = useState('white')
+    const [color, setColor] = useState('rgb(149, 179, 236)')
     let selectedDogIds = []
     if (selectedDogs){
         selectedDogIds = selectedDogs.map(dog => dog.id)
@@ -9,9 +9,9 @@ export function AdoptableDog({dog, handleDogSelection, selectedDogs}){
 
     useEffect(()=>{
         if (selectedDogIds.includes(dog.id)){
-            setColor('green')
+            setColor('rgb(149, 79, 236)')
         } else {
-            setColor('white')
+            setColor('rgb(149, 179, 236)')
         }
     },[selectedDogs])
     

@@ -3,11 +3,14 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: rgb(70, 106, 173);
 }
 
-.dog-match-container{
+.dog-search-result-container{
+  background-color: cornflowerblue;
   border-style: solid;
   border-radius: 20px;
+  padding: 10px;
 }
 .adoptable-dog-list{
   display: grid;
@@ -19,9 +22,17 @@
 }
 
 .adoptable-dog{
+  background-color: rgb(149, 179, 236);
   margin: 1rem;
   border-style: solid;
-  border-radius: 5px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.search-for-dogs{
+  border-style: solid;
+  border-radius: 25px;
+  padding: 10px;
 }
 
 
@@ -35,6 +46,7 @@
 } */
 
 .my-selected-dogs{
+  background-color: cornflowerblue;
   border-style: solid;
   border-radius: 5px;
   display: flex;
@@ -42,6 +54,7 @@
 }
 
 .match{
+  background-color: cornflowerblue;
   border-style: solid;
   border-radius: 5px;
 }

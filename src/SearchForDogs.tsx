@@ -1,4 +1,5 @@
 import Select from 'react-select'
+import './App.css'
 
 export function SearchForDogs({reactSelectOptions, handleBreedSelect, selectChange, onFindMatches, clearMatches}){
     console.log(reactSelectOptions)
@@ -13,8 +14,8 @@ export function SearchForDogs({reactSelectOptions, handleBreedSelect, selectChan
                 <option value='asc'>A-Z</option>
                 <option value='desc'>Z-A</option>
             </select>
-            <button onClick={onFindMatches}>FIND MATCHES</button>
-            <button onClick={clearMatches}>CLEAR MATCHES</button>
+            <button onClick={onFindMatches}>FIND DOGS</button>
+            <button onClick={clearMatches}>CLEAR DOGS</button>
         </div>
     )
 }
