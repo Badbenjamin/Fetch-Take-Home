@@ -13,10 +13,10 @@ function App() {
   // 
   // const [breedNames, setBreedNames] = useState([])
   // const [breedMatchList, setMatchList] = useState([])
-
+  const [currentPage, setCurrentPage] = useState(1)
   // adoption array is used to build match list?
   // SHARED BETWEEN SEARCH AND ADOPTABLE DOG LIST
-  const [adoptionArray, setAdoptionAray] = useState([])
+  const [adoptionArray, setAdoptionArray] = useState([])
   // const [reactSelectOptions, setReactSelectOptions] = useState([])
   const [adoptableDogs, setAdoptableDogs] = useState([])
   const [selectedDogs, setSelectedDogs] = useState([])
@@ -175,31 +175,23 @@ function App() {
     <div>
         <button onClick={logOut}>log out</button>
         <SearchForDogs 
-          // rso can be moved into component
-          // reactSelectOptions={reactSelectOptions} 
-          // move into component
-          // handleBreedSelect={handleBreedSelect} 
-          // move into component
-          setAdoptionArray={setAdoptionAray}
+          setAdoptionArray={setAdoptionArray}
           setTotal={setTotal}
           setNext={setNext}
           setPrev={setPrev}
-
-          // selectChange={selectChange}
-          // onFindMatches={onFindMatches}
-          // clearMatches={clearMatches}
-          // setAgeParams={setAgeParams}
-          // ageParams={ageParams}
+          setCurrentPage={setCurrentPage}
         />
         <MySelectedDogs handleDogRemove={handleDogRemove} selectedDogs={selectedDogs} getMatch={getMatch}/>
         
         <br></br>
         {match ? <Match match={match} /> : <></>}
         {adoptableDogs ? <AdoptableDogList 
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
                             selectedDogs={selectedDogs} 
                             handleDogSelection={handleDogSelection} 
                             adoptionArray={adoptionArray}
-                            setAdoptionArray={setAdoptionAray}
+                            setAdoptionArray={setAdoptionArray}
                             total={total}
                             setTotal={setTotal}
                             next={next}

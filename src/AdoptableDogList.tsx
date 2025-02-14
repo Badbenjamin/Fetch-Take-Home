@@ -4,9 +4,9 @@ import { AdoptableDog } from "./AdoptableDog"
 import PageNumberElement from "./PageNumberElement"
 import './App.css'
 
-export default function AdoptableDogList({ handleDogSelection, selectedDogs, adoptionArray, setAdoptionArray, prev, setPrev, next, setNext, total, setTotal}){
+export default function AdoptableDogList({currentPage, setCurrentPage, handleDogSelection, selectedDogs, adoptionArray, setAdoptionArray, prev, setPrev, next, setNext, total, setTotal}){
     const [adoptableDogs, setAdoptableDogs] = useState([])
-    const [currentPage, setCurrentPage] = useState(1)
+    // const [currentPage, setCurrentPage] = useState(1)
     console.log('cp', currentPage)
     const numberOfPagesArray = [...Array(Math.floor(total/25)).keys()];
    

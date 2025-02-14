@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Slider from './Slider'
 
 
-export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray}){
+export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray, setCurrentPage}){
     const [breedNames, setBreedNames] = useState([])
     const [reactSelectOptions, setReactSelectOptions] = useState([])
     const [breedMatchList, setMatchList] = useState([])
@@ -17,7 +17,6 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray}){
         fetch("https://frontend-take-home-service.fetch.com/dogs/breeds", {
         headers: {
             "Content-Type": "application/json",
-            // "Accept": 'application/json',
         },
         credentials: 'include',
         method: "GET",
@@ -43,10 +42,9 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray}){
 
     function selectChange(){
         setSortDirection(document.getElementById('sort').value)
-      }
+    }
 
-    function onFindMatches(e){
-        // console.log('breed match list find matches', breedMatchList)
+    function handleSearchSubmit(e){
         let breedQuery = ""
         if (breedMatchList.length == 1){
             breedQuery = breedMatchList
@@ -55,8 +53,7 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray}){
             breedQuery += `&breeds=${breed}`
             }
         }
-        
-        // console.log('uribml',uriBreedMatchList)
+    
         let breeds = `breeds=${breedQuery}`
         let age= `&ageMin=${ageParams[0]}&ageMax=${ageParams[1]}`
         let sort = `&sort=breed:${sortDirection}`
@@ -72,7 +69,6 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray}){
         fetch(url, {
             headers: {
             "Content-Type": "application/json",
-            // "Accept": 'application/json',
             },
             credentials: 'include',
             method: "GET",
@@ -83,10 +79,10 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray}){
             setTotal(responseData.total)
             setNext(responseData.next)
             setPrev(responseData.prev)
+            setCurrentPage(1)
             const newAdoptionArray = responseData.resultIds.map((id)=>{
             return id
             })
-            
             setAdoptionArray(newAdoptionArray)
         })
     }
@@ -109,7 +105,7 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray}){
             <Slider setAgeParams={setAgeParams} ageParams={ageParams}/> 
             </div>
             <div className='bottom-search'>
-                <button onClick={onFindMatches}>FIND DOGS</button>
+                <button onClick={handleSearchSubmit}>FIND DOGS</button>
                 {/* <button onClick={clearMatches}>CLEAR DOGS</button> */}
             </div>
             
