@@ -13,6 +13,7 @@
   padding: 10px;
 }
 .adoptable-dog-list{
+  overflow-y: hidden;
   display: grid;
   max-width: 1200px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -80,4 +81,9 @@
   padding: 10px;
   align-items:center;
   /* align-items: flex-end; */
+}
+
+.slider-component{
+  display: flex;
+  padding: 10px;
 }

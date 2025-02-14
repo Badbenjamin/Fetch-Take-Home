@@ -20,9 +20,11 @@ function App() {
   const [next, setNext] = useState("")
   const [prev, setPrev] = useState("")
   const [sortDirection, setSortDirection]= useState("asc")
+  const [ageParams, setAgeParams] = useState([0,20])
   const [match, setMatch] = useState('')
   const navigate = useNavigate()
-  console.log('addd',adoptableDogs)
+  console.log("ap", ageParams)
+  // console.log('addd',adoptableDogs)
   // let sortDirection = document.getElementById('sort').value
   // console.log('sd', sortDirection)
   // console.log('tnp', total, next, prev)
@@ -170,6 +172,8 @@ function App() {
           selectChange={selectChange}
           onFindMatches={onFindMatches}
           clearMatches={clearMatches}
+          setAgeParams={setAgeParams}
+          ageParams={ageParams}
         />
         <MySelectedDogs handleDogRemove={handleDogRemove} selectedDogs={selectedDogs} getMatch={getMatch}/>
         

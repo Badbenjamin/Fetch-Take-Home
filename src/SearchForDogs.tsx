@@ -1,8 +1,10 @@
 import Select from 'react-select'
 import './App.css'
 import { useEffect, useState } from 'react'
+import Slider from './Slider'
 
-export function SearchForDogs({reactSelectOptions, handleBreedSelect, selectChange, onFindMatches, clearMatches}){
+
+export function SearchForDogs({reactSelectOptions, handleBreedSelect, selectChange, onFindMatches, clearMatches, setAgeParams, ageParams}){
    
     return(
         <div className="search-for-dogs">
@@ -18,12 +20,7 @@ export function SearchForDogs({reactSelectOptions, handleBreedSelect, selectChan
                     <option value='asc'>A-Z</option>
                     <option value='desc'>Z-A</option>
                 </select>
-            <form>
-                <label>MIN AGE</label>
-                <input type='text'></input>
-                <label>MAX AGE</label>
-                <input type='text'></input>
-            </form>
+            <Slider setAgeParams={setAgeParams} ageParams={ageParams}/> 
             </div>
             <div className='bottom-search'>
                 <button onClick={onFindMatches}>FIND DOGS</button>
