@@ -80,8 +80,10 @@ function App() {
     }
     
     // console.log('uribml',uriBreedMatchList)
+    let age= `&ageMin=${ageParams[0]}&ageMax=${ageParams[1]}`
     let sort = `&sort=breed:${sortDirection}`
-    let url = `https://frontend-take-home-service.fetch.com/dogs/search?breeds=${breedQuery}${sort}`
+    let url = `https://frontend-take-home-service.fetch.com/dogs/search?breeds=${breedQuery}${age}${sort}`
+    console.log('url', url)
     console.log('url', url)
     fetch(url, {
        headers: {
