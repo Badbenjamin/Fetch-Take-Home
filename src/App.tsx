@@ -10,24 +10,23 @@ import Match from './Match'
 import { SearchForDogs } from './SearchForDogs'
 
 function App() {
-  // 
-  // const [breedNames, setBreedNames] = useState([])
-  // const [breedMatchList, setMatchList] = useState([])
+  // page updated in dog list component (page navigae) or search component (new search results)
   const [currentPage, setCurrentPage] = useState(1)
-  // adoption array is used to build match list?
-  // SHARED BETWEEN SEARCH AND ADOPTABLE DOG LIST
+  // adoptionArray contains ids for dog objects. returned from fetch in SearchForDogs, used to fetch 
   const [adoptionArray, setAdoptionArray] = useState([])
   // const [reactSelectOptions, setReactSelectOptions] = useState([])
   const [adoptableDogs, setAdoptableDogs] = useState([])
   const [selectedDogs, setSelectedDogs] = useState([])
 
-  // THESE STATES ARE SHARED BETWEEN SEARCH AND ADOPTABLE DOG LIST
+  
+  // These states manage the adoptable dogs list returned from the search for dogs fetch request
   const [total, setTotal] = useState(0)
   const [next, setNext] = useState("")
   const [prev, setPrev] = useState("")
-  // const [sortDirection, setSortDirection]= useState("asc")
-  // const [ageParams, setAgeParams] = useState([0,20])
+  
+  // 
   const [match, setMatch] = useState('')
+  console.log(match)
   const navigate = useNavigate()
   
 

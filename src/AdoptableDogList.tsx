@@ -5,20 +5,19 @@ import PageNumberElement from "./PageNumberElement"
 import './App.css'
 
 export default function AdoptableDogList({currentPage, setCurrentPage, handleDogSelection, selectedDogs, adoptionArray, setAdoptionArray, prev, setPrev, next, setNext, total, setTotal}){
+    // array of dog objects returned from POST /dogs 
+    // used to create adoptionList, which is made of AdoptableDogs components
     const [adoptableDogs, setAdoptableDogs] = useState([])
-    // const [currentPage, setCurrentPage] = useState(1)
-    console.log('cp', currentPage)
-    const numberOfPagesArray = [...Array(Math.floor(total/25)).keys()];
+    
+    
+    const numberOfPagesArray = [...Array(Math.ceil(total/25)).keys()];
    
     
-    // adoptionArray is a list of dog ids
-    // these ids are posted to the /dogs endpoint, and dog objects are returned
-    // adoptableDogs is the array of these objects, and is used to populate our gallery with dog cards
+    // useEffect takes adoptionArray, which is arrray of adoptable dog ids returned from GET dogs/search
     useEffect(()=>{
         fetch('https://frontend-take-home-service.fetch.com/dogs', {
                 headers: {
                     "Content-Type": "application/json",
-                    // "Accept": 'application/json',
                 },
                 credentials: 'include',
                 method: "POST",
@@ -28,28 +27,12 @@ export default function AdoptableDogList({currentPage, setCurrentPage, handleDog
             .then((dogData)=>setAdoptableDogs(dogData))
     }, [adoptionArray])
 
-    function navToPageNum(pageNum){
-        console.log('disabled')
-        // let pageDif = Math.abs(currentPage-pageNum)
-        // let direction = null
-        // if (next && pageNum > currentPage){
-        //     direction = 'next'
-        // } else if (prev && pageNum < currentPage){
-        //     direction = 'prev'
-        // } else {
-        //     return
-        // }
-        
-        
-        // for (let i = 0; i <= pageDif; i ++){
-        //   navDirection(direction)
-        // }
-    }
-
+    
     const pageNumberElements = numberOfPagesArray.map((pageNum)=>{
-        return <PageNumberElement key={pageNum} pageNum={pageNum + 1} currentPage={currentPage} navToPageNum={navToPageNum}/>
+        return <PageNumberElement key={pageNum} pageNum={pageNum + 1} currentPage={currentPage} />
     })
 
+    // navDirection uses the prev or next url param to load the next page of dogs
     function navDirection(direction){
         console.log(direction)
         let pageDirection = null
@@ -64,11 +47,10 @@ export default function AdoptableDogList({currentPage, setCurrentPage, handleDog
           console.error("end");
         }
     
-        // get next or prev from response to fetch next 25 results
+        // get next or prev from search response to fetch next 25 results
         fetch(`https://frontend-take-home-service.fetch.com${pageDirection}`, {
           headers: {
             "Content-Type": "application/json",
-            // "Accept": 'application/json',
           },
           credentials: 'include',
           method: "GET",
