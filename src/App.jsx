@@ -16,9 +16,9 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1)
   // adoptionArray contains ids for dog objects. returned from fetch in SearchForDogs, used to fetch 
   const [adoptionArray, setAdoptionArray] = useState([])
+  // IDS OF OUR SELECTED DOGS?
   const [selectedDogs, setSelectedDogs] = useState([])
-
-  
+ 
   // These states manage the adoptable dogs list returned from the search for dogs fetch request
   const [total, setTotal] = useState(0)
   const [next, setNext] = useState("")
@@ -26,7 +26,6 @@ function App() {
   
   // this is the id returned from the POST dogs/match endpoint
   const [match, setMatch] = useState('')
-  console.log(match)
   const navigate = useNavigate()
 
   useEffect(()=>{
@@ -36,7 +35,7 @@ function App() {
     }
     window.addEventListener('resize', handleResize)
   },[])
-  console.log(widthHeight)
+  
   // log user out and clear cookies
   function logOut(){
     const authUrl = "https://frontend-take-home-service.fetch.com/auth/logout"
@@ -87,8 +86,6 @@ function App() {
 
   // remove a dog id from selecteDogs array
   function handleDogRemove(dogId){
-    console.log(dogId)
-    console.log(selectedDogs)
     let newSelectedDogs = [...selectedDogs]
     let filteredSelectedDogs = newSelectedDogs.filter((dogObj)=>{
       return dogObj.id != dogId

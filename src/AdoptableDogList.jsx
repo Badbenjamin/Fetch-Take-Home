@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 
-import { AdoptableDog } from "./AdoptableDog"
-import PageNumberElement from "./PageNumberElement"
+import { AdoptableDog } from "./AdoptableDog.jsx"
+import PageNumberElement from "./PageNumberElement.jsx"
 import './App.css'
 
 export default function AdoptableDogList({currentPage, setCurrentPage, handleDogSelection, selectedDogs, adoptionArray, setAdoptionArray, prev, setPrev, next, setNext, total, setTotal, widthHeight}){

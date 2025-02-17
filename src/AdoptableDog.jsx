@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import './App.css'
 
 export function AdoptableDog({dog, handleDogSelection, selectedDogs, widthHeight}){
+    // console.log(dog, handleDogSelection, selectedDogs, widthHeight)
     const [color, setColor] = useState('rgb(149, 179, 236)')
     let selectedDogIds = []
     if (selectedDogs){

@@ -9,7 +9,7 @@ export default function MySelectedDogs({selectedDogs, handleDogRemove, getMatch,
     let selectedDogCards = selectedDogs.map((dog)=>{
         return(
             <div >
-                <AdoptableDog widthHeight={widthHeight} dog={dog}/>
+                <AdoptableDog key={dog.id} widthHeight={widthHeight} dog={dog}/>
                 <button onClick={onRemove} value={dog.id}>REMOVE</button>
             </div>
         ) 

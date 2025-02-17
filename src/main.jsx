@@ -3,9 +3,9 @@ import { createBrowserRouter, } from 'react-router'
 import { RouterProvider } from 'react-router'
 
 import './index.css'
-import App from './App.tsx'
-import LoginPage from './LoginPage.tsx'
-import ErrorElement from './ErrorElement.tsx'
+import App from './App.jsx'
+import LoginPage from './LoginPage.jsx'
+import ErrorElement from './ErrorElement.jsx'
 
 // These our our React Router pages
 const router = createBrowserRouter([
