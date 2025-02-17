@@ -92,7 +92,7 @@ function App() {
     })
     setSelectedDogs(filteredSelectedDogs)
   }
-  console.log('sd',selectedDogs)
+  
   return (
     <div className='main'>
         <h1>ADOPT A DOG!</h1>
