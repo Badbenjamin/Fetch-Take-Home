@@ -4,7 +4,7 @@ import { AdoptableDog } from "./AdoptableDog"
 import PageNumberElement from "./PageNumberElement"
 import './App.css'
 
-export default function AdoptableDogList({currentPage, setCurrentPage, handleDogSelection, selectedDogs, adoptionArray, setAdoptionArray, prev, setPrev, next, setNext, total, setTotal}){
+export default function AdoptableDogList({currentPage, setCurrentPage, handleDogSelection, selectedDogs, adoptionArray, setAdoptionArray, prev, setPrev, next, setNext, total, setTotal, widthHeight}){
     // array of dog objects returned from POST /dogs 
     // used to create adoptionList, which is made of AdoptableDogs components
     const [adoptableDogs, setAdoptableDogs] = useState([])
@@ -23,7 +23,13 @@ export default function AdoptableDogList({currentPage, setCurrentPage, handleDog
                 method: "POST",
                 body : JSON.stringify(adoptionArray)
             })
-            .then((response)=>response.json())
+            .then((response)=>{
+              if (response.ok){
+               return response.json()
+              } else {
+               window.alert('request failed')
+              }
+            })
             .then((dogData)=>setAdoptableDogs(dogData))
     }, [adoptionArray])
 
@@ -55,7 +61,13 @@ export default function AdoptableDogList({currentPage, setCurrentPage, handleDog
           credentials: 'include',
           method: "GET",
         })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) {
+            return response.json()
+          } else {
+            window.alert('request failed')
+          }
+        })
         .then((responseData)=>{
           setTotal(responseData.total)
           setNext(responseData.next)
@@ -75,17 +87,19 @@ export default function AdoptableDogList({currentPage, setCurrentPage, handleDog
             handleDogSelection={handleDogSelection} 
             key={dog.name + dog.age} 
             dog={dog}
+            widthHeight={widthHeight}
             />
       })
     return (
         <div className="dog-search-result-container">
+            <h2>ADOPTABLE DOGS</h2>
             <p>RESULTS: {total}</p>
             <div className="adoptable-dog-list">
                 {adoptionList}
             </div>
-            {!prev ? <></> : <a onClick={()=>navDirection('prev')}>prev</a>}
+            {!prev ? <></> : <button onClick={()=>navDirection('prev')}>prev</button>}
             <>{pageNumberElements}</>
-            {!next ? <></> :<a onClick={()=>navDirection('next')}>next</a>}
+            {!next ? <></> :<button onClick={()=>navDirection('next')}>next</button>}
         </div>
         
     )

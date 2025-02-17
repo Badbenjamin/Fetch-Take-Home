@@ -7,48 +7,49 @@ export default function LoginPage() {
         email: ""
     })
     let navigate = useNavigate()
+    const authUrl = "https://frontend-take-home-service.fetch.com/auth/login"
 
-    console.log(formData)
-
+    // update formData state with inputs from forms
     function onChange(e) {
         setFormData({ ...formData, [e.target.id]: e.target.value })
     }
 
+    // make sure form does not clear by preventing default
     function handleSubmit(event) {
         event.preventDefault()
-        // console.log(event)
-
-        // e.preventDefault()
-        // let submission = { formData }
-        // console.log(submission)
-        console.log(formData)
         getData(formData)
-        navigate('/home')
     }
 
-    const authUrl = "https://frontend-take-home-service.fetch.com/auth/login"
+    // POST fetch with formData to auth/login endpoint. 
     function getData(formData) {
         fetch(authUrl, {
             headers: {
                 "Content-Type": "application/json",
-                // "Accept": 'application/json',
             },
             credentials: 'include',
             method: "POST",
             body: JSON.stringify(formData)
         })
-            .then((response) => console.log(response))
-            .then((cookie) => console.log(cookie))
+            .then((response) => {
+                if (response.ok){
+                    console.log(response)
+                    navigate('/home')
+                } else {
+                    window.alert('please provide a valid email address and name.')
+                }
+            }) 
     }
 
-
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="name" >Name</label>
+        <div className="login">
+            <h2>LOGIN</h2>
+            <form className="login-fields" onSubmit={handleSubmit}>
+                <label htmlFor="name" >NAME </label>
                 <input onChange={onChange} type="text" id='name' value={formData.name}></input>
-                <label htmlFor="email">Email</label>
+                <br></br>
+                <label htmlFor="email">EMAIL </label>
                 <input onChange={onChange} type="text" id='email' value={formData.email}></input>
+                <br></br>
                 <input type="submit"></input>
             </form>
         </div>

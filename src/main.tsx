@@ -1,4 +1,3 @@
-// import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, } from 'react-router'
 import { RouterProvider } from 'react-router'
@@ -7,9 +6,8 @@ import './index.css'
 import App from './App.tsx'
 import LoginPage from './LoginPage.tsx'
 import ErrorElement from './ErrorElement.tsx'
-import Match from './Match.tsx'
 
-
+// These our our React Router pages
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,11 +19,6 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorElement />,
   },
-  // {
-  //   path: "/match",
-  //   element: <Match />,
-  //   errorElement: <ErrorElement />,
-  // },
 ])
 
 const root = createRoot(document.getElementById('root'));

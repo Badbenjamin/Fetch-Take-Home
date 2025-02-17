@@ -10,11 +10,13 @@ import Match from './Match'
 import { SearchForDogs } from './SearchForDogs'
 
 function App() {
+  // size of our screen for responsive design
+  const [widthHeight, setWitdhHeight] = useState({'width': window.innerWidth, 'height': window.innerHeight})
   // page updated in dog list component (page navigae) or search component (new search results)
   const [currentPage, setCurrentPage] = useState(1)
   // adoptionArray contains ids for dog objects. returned from fetch in SearchForDogs, used to fetch 
   const [adoptionArray, setAdoptionArray] = useState([])
-  // const [reactSelectOptions, setReactSelectOptions] = useState([])
+  // LOOK INTO THIS STATE
   const [adoptableDogs, setAdoptableDogs] = useState([])
   const [selectedDogs, setSelectedDogs] = useState([])
 
@@ -24,97 +26,22 @@ function App() {
   const [next, setNext] = useState("")
   const [prev, setPrev] = useState("")
   
-  // 
+  // this is the id returned from the POST dogs/match endpoint
   const [match, setMatch] = useState('')
   console.log(match)
   const navigate = useNavigate()
-  
 
-  // // get breed names to build reactSelect options
-  // // COULD BE IN REACT SELECT SEARCH ELEMENT? 
-  // useEffect(() => {
-  //   fetch("https://frontend-take-home-service.fetch.com/dogs/breeds", {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       // "Accept": 'application/json',
-  //     },
-  //     credentials: 'include',
-  //     method: "GET",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((dogBreedResponse) => setBreedNames(dogBreedResponse))
-  // }, [])
-
-  
-  // // build react select options
-  // useEffect(()=>{
-  //   let breedsForSelect = breedNames.map((breed)=>{
-  //     return {value: breed, label: breed}
-  //   })
-  //   setReactSelectOptions(breedsForSelect)
-
-  // },[breedNames])
-
-  // build an array of selected breeds that can be passed to search fectch req
-  // function handleBreedSelect(breedNameArray){
-  //   let breedsToMatch = breedNameArray.map((breedName)=>{
-  //     return breedName.value
-  //   })
-  //   // console.log(breedsToMatch)
-  //   setMatchList(breedsToMatch)
-  // }
-
-  // accepts array of breed names from react-select search
-  // returns ids of dogs, theses ids are sent to fetch.com/dogs to return dog objs
-  // function onFindMatches(e){
-  //   // console.log('breed match list find matches', breedMatchList)
-  //   let breedQuery = ""
-  //   if (breedMatchList.length == 1){
-  //     breedQuery = breedMatchList
-  //   } else if (breedMatchList.length > 1){
-  //     for (const breed of breedMatchList){
-  //       breedQuery += `&breeds=${breed}`
-  //     }
-  //   }
-    
-  //   // console.log('uribml',uriBreedMatchList)
-  //   let breeds = `breeds=${breedQuery}`
-  //   let age= `&ageMin=${ageParams[0]}&ageMax=${ageParams[1]}`
-  //   let sort = `&sort=breed:${sortDirection}`
-  //   let url = 'https://frontend-take-home-service.fetch.com/dogs/search'
-  //   if (breedQuery){
-  //     url = `https://frontend-take-home-service.fetch.com/dogs/search?${breeds}${age}${sort}`
-  //   } else {
-  //     url = `https://frontend-take-home-service.fetch.com/dogs/search?${age}${sort}`
-  //   }
-    
-  //   console.log('url', url)
-  //   console.log('url', url)
-  //   fetch(url, {
-  //      headers: {
-  //       "Content-Type": "application/json",
-  //       // "Accept": 'application/json',
-  //     },
-  //     credentials: 'include',
-  //     method: "GET",
-  // })
-  //   .then((response) => response.json())
-  //   .then((responseData)=>{
-  //     console.log('resp dat',responseData)
-  //     setTotal(responseData.total)
-  //     setNext(responseData.next)
-  //     setPrev(responseData.prev)
-  //     const newAdoptionArray = responseData.resultIds.map((id)=>{
-  //       return id
-  //     })
-      
-  //     setAdoptionAray(newAdoptionArray)
-  //   })
-  // }
-
+  useEffect(()=>{
+    // setWitdhHeight({'width': window.innerWidth, 'height': window.innerHeight})
+    function handleResize(){
+      setWitdhHeight({'width': window.innerWidth, 'height': window.innerHeight})
+    }
+    window.addEventListener('resize', handleResize)
+  },[])
+  console.log(widthHeight)
+  // log user out and clear cookies
   function logOut(){
     const authUrl = "https://frontend-take-home-service.fetch.com/auth/logout"
-    
     fetch(authUrl, {
         headers: {
             "Content-Type": "application/json",
@@ -126,40 +53,41 @@ function App() {
     navigate("/")
   }
 
+  // getMatch takes the IDs of our selected dogs and posts them to POST dogs/match
+  // this returns the ID of our match. 
   function getMatch(){
-    console.log('sd',selectedDogs)
-    
       fetch('https://frontend-take-home-service.fetch.com/dogs/match', {
         headers: {
           "Content-Type": "application/json",
-          // "Accept": 'application/json',
         },
         credentials: 'include',
         method: "POST",
         body : JSON.stringify(selectedDogs.map(dog => dog.id))
       })
-      .then((response)=>response.json())
-      .then((matchData)=>setMatch(matchData.match))
-    
-    
+      .then((response)=>{
+        if (response.ok) {
+          return response.json()
+        } else {
+          window.alert('please select dogs to get a match')
+        }
+      })
+      .then((matchData)=>{
+        if (matchData.match) {
+          return setMatch(matchData.match)
+        } else {
+          window.alert('please select dogs to get a match')
+        }
+ 
+      })
   }
 
-  function clearMatches(){
-    setReactSelectOptions([])
-    setAdoptableDogs([])
-    setNext("")
-    setPrev("")
-  }
-
-  // function selectChange(){
-  //   setSortDirection(document.getElementById('sort').value)
-  // }
-
+  // add a dog id to our selectedDogs array to display in MySelectedDogs component. 
   function handleDogSelection(dog){
     let newSelectedDogs = [...selectedDogs, dog]
     setSelectedDogs(newSelectedDogs)
   }
 
+  // remove a dog id from selecteDogs array
   function handleDogRemove(dogId){
     console.log(dogId)
     console.log(selectedDogs)
@@ -169,10 +97,11 @@ function App() {
     })
     setSelectedDogs(filteredSelectedDogs)
   }
-  console.log(selectedDogs)
+  console.log('sd',selectedDogs)
   return (
-    <div>
-        <button onClick={logOut}>log out</button>
+    <div className='main'>
+        <h1>ADOPT A DOG!</h1>
+        <button className='log-out' onClick={logOut}>log out</button>
         <SearchForDogs 
           setAdoptionArray={setAdoptionArray}
           setTotal={setTotal}
@@ -180,10 +109,9 @@ function App() {
           setPrev={setPrev}
           setCurrentPage={setCurrentPage}
         />
-        <MySelectedDogs handleDogRemove={handleDogRemove} selectedDogs={selectedDogs} getMatch={getMatch}/>
-        
+        {selectedDogs.length > 0 ? <MySelectedDogs widthHeight={widthHeight} handleDogRemove={handleDogRemove} selectedDogs={selectedDogs} getMatch={getMatch}/> : <></>}
         <br></br>
-        {match ? <Match match={match} /> : <></>}
+        {match ? <Match widthHeight={widthHeight} match={match} /> : <></>}
         {adoptableDogs ? <AdoptableDogList 
                             currentPage={currentPage}
                             setCurrentPage={setCurrentPage}
@@ -197,6 +125,7 @@ function App() {
                             setNext={setNext}
                             prev={prev}
                             setPrev={setPrev}
+                            widthHeight={widthHeight}
                           /> 
                         : <>pick your breed</>
           }

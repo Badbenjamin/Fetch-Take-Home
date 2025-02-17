@@ -13,7 +13,6 @@
   padding: 10px;
 }
 .adoptable-dog-list{
-  overflow-y: hidden;
   display: grid;
   max-width: 1200px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -37,8 +36,12 @@
   padding: 10px;
 }
 
-@media (max-width: 1200px){
+@media (min-width: 1200px){
   .adoptable-dog-list{ grid-template-columns: repeat(5, 1fr);}
+}
+
+@media (max-width: 1000px){
+  .adoptable-dog-list{ grid-template-columns: repeat(4, 1fr);}
 }
 
 @media (max-width: 900px){
@@ -69,6 +72,7 @@
   background-color: cornflowerblue;
   border-style: solid;
   border-radius: 20px;
+
 }
 
 .match-pic{
@@ -79,11 +83,41 @@
 
 .match-info{
   padding: 10px;
-  align-items:center;
-  /* align-items: flex-end; */
 }
 
 .slider-component{
   display: flex;
   padding: 10px;
+}
+
+.log-out{
+  margin-left: auto;
+}
+
+.login{
+  border-style: solid;
+  border-radius: 20px;
+}
+
+.login-fields{
+  padding: 10px;
+}
+
+/* .dog-text{
+  font-weight: bolder;
+  align-items: start;
+} */
+
+.login-fields{
+  font-weight: bolder;
+  padding: 5px;
+}
+
+.match-info{
+  display: flex;
+  flex-direction: column;
+}
+
+.main{
+  width: 100%;
 }

@@ -7,7 +7,7 @@ import { useState } from 'react'
 export default function AgeSlider({setAgeParams, ageParams}){
     
     
-
+    // set min and max age range for dog search
     function handleChange(values){
         setAgeParams([values[0],values[1]])
     }

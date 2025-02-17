@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
+import './App.css'
 
-export function AdoptableDog({dog, handleDogSelection, selectedDogs}){
+export function AdoptableDog({dog, handleDogSelection, selectedDogs, widthHeight}){
     const [color, setColor] = useState('rgb(149, 179, 236)')
     let selectedDogIds = []
     if (selectedDogs){
@@ -23,7 +24,7 @@ export function AdoptableDog({dog, handleDogSelection, selectedDogs}){
 
     return(
         <div style={{backgroundColor : color}}  onClick={handleClick} className="adoptable-dog">
-            <img width={100} height={100} src={dog.img} alt={dog.breed} />
+            <img width={widthHeight.width/8} height={widthHeight.width/10} src={dog.img} alt={dog.breed} />
             <br></br>
             <>NAME: {dog.name}</>
             <br></br>

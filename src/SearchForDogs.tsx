@@ -44,6 +44,7 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray, set
         setSortDirection(document.getElementById('sort').value)
     }
 
+    // this function takes our search parameters, parameterizes them, and makes the GET request to GET dogs/search.
     function handleSearchSubmit(e){
         let breedQuery = ""
         if (breedMatchList.length == 1){
@@ -64,8 +65,6 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray, set
             url = `https://frontend-take-home-service.fetch.com/dogs/search?${age}${sort}`
         }
         
-        console.log('url', url)
-        console.log('url', url)
         fetch(url, {
             headers: {
             "Content-Type": "application/json",
@@ -73,7 +72,13 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray, set
             credentials: 'include',
             method: "GET",
         })
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                window.alert('search request failed')
+            }
+        })
         .then((responseData)=>{
             console.log('resp dat',responseData)
             setTotal(responseData.total)
@@ -83,14 +88,20 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray, set
             const newAdoptionArray = responseData.resultIds.map((id)=>{
             return id
             })
+            if (responseData.total  < 1) {
+                window.alert('no restults. please refine search.')
+            } else {
+                console.log('i worked', newAdoptionArray)
+            }
             setAdoptionArray(newAdoptionArray)
         })
     }
 
-   
     return(
         <div className="search-for-dogs">
+            <h2>SEARCH FOR DOGS</h2>
             <div className='top-search'>
+                <>SEARCH BY BREED</>
                 <Select options={reactSelectOptions}
                 onChange={opt=>handleBreedSelect(opt)}
                 isMulti
@@ -106,9 +117,7 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray, set
             </div>
             <div className='bottom-search'>
                 <button onClick={handleSearchSubmit}>FIND DOGS</button>
-                {/* <button onClick={clearMatches}>CLEAR DOGS</button> */}
             </div>
-            
         </div>
     )
 }
