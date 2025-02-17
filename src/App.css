@@ -34,6 +34,7 @@
   border-style: solid;
   border-radius: 25px;
   padding: 10px;
+  background-color: cornflowerblue;
 }
 
 @media (min-width: 1200px){
@@ -56,19 +57,18 @@
   border-style: solid;
   border-radius: 20px;
   background-color: cornflowerblue;
+  padding: 15px;
 }
 
 .my-selected-dogs{
   padding: 5px;
-  
-  
   display: flex;
   overflow-y: hidden;
 }
 
 .match{
   display: flex;
-  padding: 5px;
+  padding: 20px;
   background-color: cornflowerblue;
   border-style: solid;
   border-radius: 20px;
@@ -79,10 +79,6 @@
   padding: 10px;
   flex-direction: column;
   align-items: flex-start;
-}
-
-.match-info{
-  padding: 10px;
 }
 
 .slider-component{
@@ -103,10 +99,10 @@
   padding: 10px;
 }
 
-/* .dog-text{
+.dog-text{
   font-weight: bolder;
   align-items: start;
-} */
+}
 
 .login-fields{
   font-weight: bolder;
@@ -114,10 +110,17 @@
 }
 
 .match-info{
+  padding: 20px;
   display: flex;
   flex-direction: column;
 }
 
 .main{
   width: 100%;
+  padding: 10px;
+}
+
+.dog-img{
+  border-style: solid;
+  border-radius: 20px;
 }

@@ -24,7 +24,7 @@ export function AdoptableDog({dog, handleDogSelection, selectedDogs, widthHeight
 
     return(
         <div style={{backgroundColor : color}}  onClick={handleClick} className="adoptable-dog">
-            <img width={widthHeight.width/8} height={widthHeight.width/10} src={dog.img} alt={dog.breed} />
+            <img className="dog-img" width={widthHeight.width/8} height={widthHeight.width/10} src={dog.img} alt={dog.breed} />
             <br></br>
             <>NAME: {dog.name}</>
             <br></br>

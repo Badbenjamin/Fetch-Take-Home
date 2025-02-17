@@ -32,7 +32,7 @@ export default function Match({match, widthHeight}){
         return(
             <div className="match">
                 <div className="match-pic">
-                    <img width={widthHeight.width/2} height={widthHeight.width/3} src={ourMatch[0].img} alt={ourMatch[0].name}/>
+                    <img className="dog-img" width={widthHeight.width/2} height={widthHeight.width/3} src={ourMatch[0].img} alt={ourMatch[0].name}/>
                 </div>
                 <div className="match-info">
                     <strong className="dog-text">BREED: {ourMatch[0].breed}</strong>

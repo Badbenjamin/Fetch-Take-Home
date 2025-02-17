@@ -10,7 +10,7 @@ export default function MySelectedDogs({selectedDogs, handleDogRemove, getMatch,
         return(
             <div >
                 <AdoptableDog widthHeight={widthHeight} dog={dog}/>
-                <button onClick={onRemove} value={dog.id}>remove</button>
+                <button onClick={onRemove} value={dog.id}>REMOVE</button>
             </div>
         ) 
     })

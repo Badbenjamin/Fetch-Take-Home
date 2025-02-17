@@ -16,8 +16,6 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1)
   // adoptionArray contains ids for dog objects. returned from fetch in SearchForDogs, used to fetch 
   const [adoptionArray, setAdoptionArray] = useState([])
-  // LOOK INTO THIS STATE
-  const [adoptableDogs, setAdoptableDogs] = useState([])
   const [selectedDogs, setSelectedDogs] = useState([])
 
   
@@ -101,7 +99,8 @@ function App() {
   return (
     <div className='main'>
         <h1>ADOPT A DOG!</h1>
-        <button className='log-out' onClick={logOut}>log out</button>
+        <button className='log-out' onClick={logOut}>LOG OUT</button>
+        <br></br>
         <SearchForDogs 
           setAdoptionArray={setAdoptionArray}
           setTotal={setTotal}
@@ -109,10 +108,12 @@ function App() {
           setPrev={setPrev}
           setCurrentPage={setCurrentPage}
         />
+        <br></br>
         {selectedDogs.length > 0 ? <MySelectedDogs widthHeight={widthHeight} handleDogRemove={handleDogRemove} selectedDogs={selectedDogs} getMatch={getMatch}/> : <></>}
         <br></br>
         {match ? <Match widthHeight={widthHeight} match={match} /> : <></>}
-        {adoptableDogs ? <AdoptableDogList 
+        <br></br>
+        {adoptionArray.length > 0 ? <AdoptableDogList 
                             currentPage={currentPage}
                             setCurrentPage={setCurrentPage}
                             selectedDogs={selectedDogs} 
@@ -127,7 +128,7 @@ function App() {
                             setPrev={setPrev}
                             widthHeight={widthHeight}
                           /> 
-                        : <>pick your breed</>
+                        : <></>
           }
     </div> 
   )
