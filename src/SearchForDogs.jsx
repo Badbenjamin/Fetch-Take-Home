@@ -46,6 +46,10 @@ export function SearchForDogs({setTotal, setNext, setPrev, setAdoptionArray, set
 
     // this function takes our search parameters, parameterizes them, and makes the GET request to GET dogs/search.
     function handleSearchSubmit(e){
+        if (breedMatchList.length >= 100) {
+            window.alert('please only enter 100 or less breed names')
+            return
+        }
         let breedQuery = ""
         if (breedMatchList.length == 1){
             breedQuery = breedMatchList
