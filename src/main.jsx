@@ -9,17 +9,22 @@ import ErrorElement from './ErrorElement.jsx'
 
 // These our our React Router pages
 const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <LoginPage />,
+      errorElement: <ErrorElement />,
+    },
+    {
+      path: "/home",
+      element: <App />,
+      errorElement: <ErrorElement />,
+    },
+  ],
   {
-    path: "/",
-    element: <LoginPage />,
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/home",
-    element: <App />,
-    errorElement: <ErrorElement />,
-  },
-])
+    basename: process.env.PUBLIC_URL
+  }
+  ,
+)
 
 const root = createRoot(document.getElementById('root'));
 root.render(<RouterProvider router={router} />)
