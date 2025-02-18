@@ -19,10 +19,7 @@ const router = createBrowserRouter([
       element: <App />,
       errorElement: <ErrorElement />,
     },
-  ],
-  {
-    basename: import.meta.env.PUBLIC_URL
-  }
+  ]
 )
 
 const root = createRoot(document.getElementById('root'));
