@@ -1,7 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, } from 'react-router'
 import { RouterProvider } from 'react-router'
-import { HashRouter } from 'react-router'
 
 import './index.css'
 import App from './App.jsx'
@@ -11,7 +10,7 @@ import ErrorElement from './ErrorElement.jsx'
 // These our our React Router pages
 const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/Fetch-Take-Home",
       element: <LoginPage />,
       errorElement: <ErrorElement />,
     },
