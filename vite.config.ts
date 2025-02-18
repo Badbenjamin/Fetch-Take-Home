@@ -4,6 +4,6 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base : "/Fetch-Take-Home"
+  base : "/Fetch-Take-Home/"
 })
 
