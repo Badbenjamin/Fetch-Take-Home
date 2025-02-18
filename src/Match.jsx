@@ -31,7 +31,7 @@ export default function Match({match, widthHeight}){
     if (ourMatch[0]){
         return(
             <div className="match">
-                <h1>YOUR MATCH!</h1>
+                <h1 className="match-title">YOU MATCHED WITH {ourMatch[0].name.toUpperCase()+"!"}</h1>
                 <div className="match-pic">
                     <img className="dog-img" width={widthHeight.width/2} height={widthHeight.width/3} src={ourMatch[0].img} alt={ourMatch[0].name}/>
                 </div>

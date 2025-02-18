@@ -45,11 +45,9 @@ export default function LoginPage() {
             <h2>LOGIN</h2>
             <form className="login-fields" onSubmit={handleSubmit}>
                 <label htmlFor="name" >NAME </label>
-                <input onChange={onChange} type="text" id='name' value={formData.name}></input>
-                <br></br>
+                <input  onChange={onChange} type="text" id='name' value={formData.name}></input>
                 <label htmlFor="email">EMAIL </label>
                 <input onChange={onChange} type="text" id='email' value={formData.email}></input>
-                <br></br>
                 <input type="submit"></input>
             </form>
         </div>
