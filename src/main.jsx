@@ -11,7 +11,7 @@ import ErrorElement from './ErrorElement.jsx'
 // These our our React Router pages
 const router = createBrowserRouter([
     {
-      path: "/Fetch-Take-Home/",
+      path: "/",
       element: <LoginPage />,
       errorElement: <ErrorElement />,
     },

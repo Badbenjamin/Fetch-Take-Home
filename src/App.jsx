@@ -47,7 +47,8 @@ function App() {
         method: "POST",
         body: "logout"
     })
-    navigate("/Fetch-Take-Home/")
+    // ERROR ON DEPLOYED SITE
+    navigate("/")
   }
 
   // getMatch takes the IDs of our selected dogs and posts them to POST dogs/match
